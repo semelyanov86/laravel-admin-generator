@@ -67,7 +67,7 @@ return [
 
         'repository'        => 'App\Repositories',
 
-        'controller'        => 'App\Http\Controllers',
+        'controller'        => 'App\Http\Controllers\Admin',
 
         'api_controller'    => 'App\Http\Controllers\API',
 
@@ -142,11 +142,11 @@ return [
 
     'prefixes' => [
 
-        'route' => '',  // using admin will create route('admin.?.index') type routes
+        'route' => 'admin',  // using admin will create route('admin.?.index') type routes
 
         'path' => '',
 
-        'view' => '',  // using backend will create return view('backend.?.index') type the backend views directory
+        'view' => 'admin',  // using backend will create return view('backend.?.index') type the backend views directory
 
         'public' => '',
     ],
@@ -164,13 +164,13 @@ return [
 
         'tests'         => true,
 
-        'datatables'    => false,
+        'datatables'    => true,
 
         'menu'          => [
 
             'enabled'       => true,
 
-            'menu_file'     => 'layouts/menu.blade.php',
+            'menu_file'     => 'partials/menu.blade.php',
         ],
     ],
 

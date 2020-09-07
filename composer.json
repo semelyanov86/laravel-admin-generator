@@ -23,7 +23,8 @@
         "laravel/ui": "^2.2",
         "laravelcollective/html": "^6.1",
         "laraveldaily/laravel-charts": "^0.1.14",
-        "yajra/laravel-datatables-oracle": "^9.9"
+        "yajra/laravel-datatables-buttons": "^4.0",
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.4",

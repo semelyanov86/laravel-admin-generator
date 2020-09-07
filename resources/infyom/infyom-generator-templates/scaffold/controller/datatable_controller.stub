@@ -29,6 +29,7 @@ class $MODEL_NAME$Controller extends AppBaseController
      */
     public function index($MODEL_NAME$DataTable $$MODEL_NAME_CAMEL$DataTable)
     {
+        abort_if(Gate::denies('$MODEL_NAME_PLURAL_SNAKE$_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return $$MODEL_NAME_CAMEL$DataTable->render('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.index');
     }
 
@@ -39,6 +40,7 @@ class $MODEL_NAME$Controller extends AppBaseController
      */
     public function create()
     {
+        abort_if(Gate::denies('$MODEL_NAME_PLURAL_SNAKE$_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.create');
     }
 
@@ -69,6 +71,7 @@ class $MODEL_NAME$Controller extends AppBaseController
      */
     public function show($id)
     {
+        abort_if(Gate::denies('$MODEL_NAME_PLURAL_SNAKE$_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find($id);
 
         if (empty($$MODEL_NAME_CAMEL$)) {
@@ -89,6 +92,7 @@ class $MODEL_NAME$Controller extends AppBaseController
      */
     public function edit($id)
     {
+        abort_if(Gate::denies('$MODEL_NAME_CAMEL$_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find($id);
 
         if (empty($$MODEL_NAME_CAMEL$)) {
@@ -134,6 +138,7 @@ class $MODEL_NAME$Controller extends AppBaseController
      */
     public function destroy($id)
     {
+        abort_if(Gate::denies('$MODEL_NAME_CAMEL$_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find($id);
 
         if (empty($$MODEL_NAME_CAMEL$)) {
@@ -147,5 +152,11 @@ class $MODEL_NAME$Controller extends AppBaseController
         Flash::success('$MODEL_NAME_HUMAN$ deleted successfully.');
 
         return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+    }
+
+    public function massDestroy(MassDestroy$MODEL_NAME_HUMAN$Request $request)
+    {
+        $MODEL_NAME_HUMAN$::whereIn('id', request('ids'))->delete();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
