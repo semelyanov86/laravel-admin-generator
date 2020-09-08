@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Lib\Scaffold\UcoMenuGenerator;
+use App\Lib\Scaffold\UcoRoutesGenerator;
 use Illuminate\Console\Command;
 use InfyOm\Generator\Commands\BaseCommand;
 use InfyOm\Generator\Commands\Scaffold\ScaffoldGeneratorCommand;
@@ -110,7 +111,7 @@ class UcoScaffoldGeneratorCommand extends BaseCommand
         }
 
         if (!$this->isSkip('routes') and !$this->isSkip('scaffold_routes')) {
-            $routeGenerator = new RoutesGenerator($this->commandData);
+            $routeGenerator = new UcoRoutesGenerator($this->commandData);
             $routeGenerator->generate();
         }
 

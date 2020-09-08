@@ -60,4 +60,11 @@ class UcoMenuGenerator extends MenuGenerator
         file_put_contents($this->path, $this->menuContents);
         $this->commandData->commandComment("\n".$this->commandData->config->mCamelPlural.' menu added.');
     }
+    public function rollback()
+    {
+        if (Str::contains($this->menuContents, $this->menuTemplate)) {
+            file_put_contents($this->path, str_replace($this->menuTemplate, self::PLACEHOLDER_VALUE, $this->menuContents));
+            $this->commandData->commandComment('menu deleted');
+        }
+    }
 }

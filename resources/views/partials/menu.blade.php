@@ -72,7 +72,29 @@
                 </a>
             </li>
         @endcan
+        @can('samples_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('admin.samples.index') }}" class="c-sidebar-nav-link {{ Request::is('admin/samples*') ? 'active' : '' }}">
+                                <i class="fa-fw fab fa-blank c-sidebar-nav-icon">
+                                </i>
+                                @lang('models/samples.plural')
+                            </a>
+            </li>
+        @endcan
+        @can('samples_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route('samples.index') }}" class="c-sidebar-nav-link {{ Request::is('samples*') ? 'active' : '' }}">
+                                <i class="fa-fw fab fa-blank c-sidebar-nav-icon">
+                                </i>
+                                @lang('models/samples.plural')
+                            </a>
+            </li>
+        @endcan
 {{--   UCO SCAFFOLD PLACEHOLDER     --}}
+
+
+
+
         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')
                 <li class="c-sidebar-nav-item">
