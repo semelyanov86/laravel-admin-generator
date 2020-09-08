@@ -72,6 +72,7 @@
                 </a>
             </li>
         @endcan
+{{--   UCO SCAFFOLD PLACEHOLDER     --}}
         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')
                 <li class="c-sidebar-nav-item">
@@ -94,4 +95,3 @@
     </ul>
 
 </div>
-
