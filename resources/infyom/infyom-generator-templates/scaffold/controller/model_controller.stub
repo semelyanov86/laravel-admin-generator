@@ -8,7 +8,8 @@ use $NAMESPACE_APP$\Http\Controllers\AppBaseController;
 use $NAMESPACE_MODEL$\$MODEL_NAME$;
 use Illuminate\Http\Request;
 use Flash;
-use Response;
+use Symfony\Component\HttpFoundation\Response;
+use Gate;
 
 class $MODEL_NAME$Controller extends AppBaseController
 {
@@ -21,6 +22,7 @@ class $MODEL_NAME$Controller extends AppBaseController
      */
     public function index(Request $request)
     {
+        abort_if(Gate::denies('$MODEL_NAME_CAMEL$_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         /** @var $MODEL_NAME$ $$MODEL_NAME_PLURAL_CAMEL$ */
         $$MODEL_NAME_PLURAL_CAMEL$ = $MODEL_NAME$::$RENDER_TYPE$;
 
@@ -35,6 +37,8 @@ class $MODEL_NAME$Controller extends AppBaseController
      */
     public function create()
     {
+        abort_if(Gate::denies('$MODEL_NAME_CAMEL$_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.create');
     }
 
@@ -66,6 +70,8 @@ class $MODEL_NAME$Controller extends AppBaseController
      */
     public function show($id)
     {
+        abort_if(Gate::denies('$MODEL_NAME_CAMEL$_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         /** @var $MODEL_NAME$ $$MODEL_NAME_CAMEL$ */
         $$MODEL_NAME_CAMEL$ = $MODEL_NAME$::find($id);
 
@@ -87,6 +93,8 @@ class $MODEL_NAME$Controller extends AppBaseController
      */
     public function edit($id)
     {
+        abort_if(Gate::denies('$MODEL_NAME_CAMEL$_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         /** @var $MODEL_NAME$ $$MODEL_NAME_CAMEL$ */
         $$MODEL_NAME_CAMEL$ = $MODEL_NAME$::find($id);
 

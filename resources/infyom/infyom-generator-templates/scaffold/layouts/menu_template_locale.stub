@@ -1,4 +1,4 @@
-        @can('$MODEL_NAME_PLURAL_CAMEL$_access')
+        @can('$MODEL_NAME_CAMEL$_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index') }}" class="c-sidebar-nav-link {{ Request::is('$ROUTE_PREFIX$$MODEL_NAME_PLURAL_CAMEL$*') ? 'active' : '' }}">
                                 <i class="fa-fw fab fa-blank c-sidebar-nav-icon">

@@ -5,7 +5,7 @@
           <li class="breadcrumb-item">
              <a href="{!! route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index') !!}">@lang('models/$MODEL_NAME_PLURAL_CAMEL$.singular')</a>
           </li>
-          <li class="breadcrumb-item active">@lang('crud.edit')</li>
+          <li class="breadcrumb-item active">@lang('cruds.edit')</li>
         </ol>
     <div class="container-fluid">
          <div class="animated fadeIn">

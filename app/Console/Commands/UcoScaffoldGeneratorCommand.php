@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use App\Lib\Scaffold\UcoMenuGenerator;
 use App\Lib\Scaffold\UcoRoutesGenerator;
+use App\Permission;
+use App\Role;
 use Illuminate\Console\Command;
 use InfyOm\Generator\Commands\BaseCommand;
 use InfyOm\Generator\Commands\Scaffold\ScaffoldGeneratorCommand;
@@ -56,9 +58,43 @@ class UcoScaffoldGeneratorCommand extends BaseCommand
             $this->generateScaffoldItems();
 
             $this->performPostActionsWithMigration();
+            $this->fillDatabase();
         } else {
             $this->commandData->commandInfo('There are not enough input fields for scaffold generation.');
         }
+    }
+
+    private function fillDatabase()
+    {
+        $model = $this->commandData->dynamicVars['$MODEL_NAME_CAMEL$'];
+        $params = array([
+                'title' => $model . '_create',
+            ],
+            [
+                'title' => $model . '_edit',
+            ],
+            [
+                'title' => $model . '_show',
+            ],
+            [
+                'title' => $model . '_delete',
+            ],
+            [
+                'title' => $model . '_access',
+            ]);
+        foreach ($params as $param) {
+            $isExisted = Permission::whereTitle($param['title'])->first();
+            if (!$isExisted) {
+                Permission::create($param);
+            }
+        }
+        $admin_permissions = Permission::all();
+        Role::findOrFail(1)->permissions()->sync($admin_permissions->pluck('id'));
+        $user_permissions = $admin_permissions->filter(function ($permission) {
+            return substr($permission->title, 0, 5) != 'user_' && substr($permission->title, 0, 5) != 'role_' && substr($permission->title, 0, 11) != 'permission_';
+        });
+        Role::findOrFail(2)->permissions()->sync($user_permissions);
+
     }
 
     /**

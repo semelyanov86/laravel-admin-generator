@@ -27,7 +27,7 @@ return [
 
         'api_request'       => app_path('Http/Requests/API/'),
 
-        'controller'        => app_path('Http/Controllers/'),
+        'controller'        => app_path('Http/Controllers/Admin/'),
 
         'api_controller'    => app_path('Http/Controllers/API/'),
 
@@ -142,7 +142,7 @@ return [
 
     'prefixes' => [
 
-        'route' => '',  // using admin will create route('admin.?.index') type routes
+        'route' => 'admin',  // using admin will create route('admin.?.index') type routes
 
         'path' => '',
 
@@ -164,7 +164,7 @@ return [
 
         'tests'         => true,
 
-        'datatables'    => true,
+        'datatables'    => false,
 
         'menu'          => [
 

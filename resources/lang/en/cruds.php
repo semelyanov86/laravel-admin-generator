@@ -91,4 +91,10 @@ return [
             'deleted_at_helper' => '',
         ],
     ],
+    'save' => 'Save',
+    'cancel' => 'Cancel',
+    'detail' => 'Detail',
+    'add_new' => 'Add New',
+    'edit' => 'Edit',
+    'action' => 'Action'
 ];
