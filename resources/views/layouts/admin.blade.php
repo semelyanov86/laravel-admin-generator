@@ -167,6 +167,12 @@
             scrollX: true,
             pageLength: 100,
             dom: 'lBfrtip<"actions">',
+            "language": {
+                "paginate": {
+                    "previous": "&lt;",
+                    "next": "&gt;"
+                }
+            },
             buttons: [
                 {
                     extend: 'selectAll',
