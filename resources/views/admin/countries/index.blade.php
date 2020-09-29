@@ -11,7 +11,7 @@
         </div>
 
         <div class="card-body">
-            <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Country">
+            <table class="display responsive nowrap table table-bordered table-striped table-hover ajaxTable datatable datatable-Country">
                 <thead>
                 <tr>
                     <th width="10">
@@ -74,11 +74,19 @@
             @endcan
 
             let dtOverrideGlobals = {
-                buttons: dtButtons,
+                buttons: {
+                    buttons: dtButtons,
+                    dom: {
+                        container: {
+                            className: 'dt-buttons d-none d-sm-block'
+                        }
+                    }
+                },
                 processing: true,
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
+                responsive: true,
                 ajax: "{{ route('admin.countries.index') }}",
                 columns: [
                     { data: 'placeholder', name: 'placeholder' },
@@ -89,7 +97,10 @@
                 ],
                 orderCellsTop: true,
                 order: [[ 1, 'desc' ]],
-                pageLength: 100,
+                pageLength: 10,
+                initComplete: function(settings, json) {
+                    $('div.dataTables_length').addClass( 'd-none d-sm-block' );
+                }
             };
             let table = $('.datatable-Country').DataTable(dtOverrideGlobals);
             $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
