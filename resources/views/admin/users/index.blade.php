@@ -2,9 +2,9 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <strong>{{ trans('cruds.user.title_singular') }} {{ trans('global.list') }}</strong>
+        <strong class="line-title">{{ trans('cruds.user.title_singular') }} {{ trans('global.list') }}</strong>
         @can('user_create')
-            <a class="btn btn-success pull-right" href="{{ route('admin.users.create') }}">
+            <a class="btn btn-sm btn-success pull-right" href="{{ route('admin.users.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
             </a>
         @endcan

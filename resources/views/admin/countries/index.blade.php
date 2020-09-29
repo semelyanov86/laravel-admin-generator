@@ -2,9 +2,9 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <strong>{{ trans('cruds.country.title_singular') }} {{ trans('global.list') }}</strong>
+            <strong  class="line-title">{{ trans('cruds.country.title_singular') }} {{ trans('global.list') }}</strong>
             @can('country_create')
-                <a class="btn btn-success pull-right" href="{{ route('admin.countries.create') }}">
+                <a class="btn btn-sm btn-success pull-right" href="{{ route('admin.countries.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.country.title_singular') }}
                 </a>
             @endcan
