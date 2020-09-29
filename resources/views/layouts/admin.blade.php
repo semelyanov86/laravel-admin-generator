@@ -61,15 +61,11 @@
                         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                             @can('profile_password_edit')
                                 <a class="dropdown-item" href="{{ route('profile.password.edit') }}">
-                                    <svg class="c-icon mfe-2">
-                                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
-                                    </svg> {{ trans('global.change_password') }}</a>
+                                    {{ trans('global.change_password') }}</a>
                             @endcan
                         @endif
                         <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                            <svg class="c-icon mfe-2">
-                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
-                            </svg> {{ trans('global.logout') }}</a>
+                             {{ trans('global.logout') }}</a>
                     </div>
                 </li>
 
