@@ -11,17 +11,20 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="title">{{ trans('cruds.role.fields.title') }}</label>
+                <label class="required" for="title">{{ trans('cruds.role.fields.title') }}</label> @if ( trans('cruds.role.fields.title_helper') && trans('cruds.role.fields.title_helper') != ' '  )
+                    <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('cruds.role.fields.title_helper') }}"></i>
+                @endif
                 <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title', $role->title) }}" required>
                 @if($errors->has('title'))
                     <div class="invalid-feedback">
                         {{ $errors->first('title') }}
                     </div>
                 @endif
-                <small class="text-muted">{{ trans('cruds.role.fields.title_helper') }}</small>
             </div>
             <div class="form-group">
-                <label class="required" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label>
+                <label class="required" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label> @if ( trans('cruds.role.fields.permissions_helper') && trans('cruds.role.fields.permissions_helper') != ' '  )
+                    <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="bottom" title="{{ trans('cruds.role.fields.permissions_helper') }}"></i>
+                @endif
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
@@ -36,7 +39,6 @@
                         {{ $errors->first('permissions') }}
                     </div>
                 @endif
-                <small class="text-muted">{{ trans('cruds.role.fields.permissions_helper') }}</small>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
