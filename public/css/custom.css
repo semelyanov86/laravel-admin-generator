@@ -119,3 +119,14 @@ table.dataTable thead .sorting_desc {
 .c-sidebar-brand .c-sidebar-brand-full:hover {
     color: inherit;
 }
+
+.line-title {
+    line-height: 25px;
+}
+
+#sidebar .select2-container {
+    padding: .8445rem 1rem;
+}
+#sidebar .select2-selection__arrow {
+    display: none!important;
+}

@@ -1,12 +1,3 @@
-<style>
-    #sidebar .select2-container {
-        padding: .8445rem 1rem;
-    }
-    #sidebar .select2-selection__arrow {
-        display: none!important;
-    }
-</style>
-
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show">
 
     <div class="c-sidebar-brand d-md-down-none">
