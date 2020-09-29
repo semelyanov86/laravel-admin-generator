@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.country.title') }}
+        <strong>{{ trans('global.show') }} {{ trans('cruds.country.title') }}</strong>
     </div>
 
     <div class="card-body">

@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.role.title_singular') }}
+        <strong>{{ trans('global.create') }} {{ trans('cruds.role.title_singular') }}</strong>
     </div>
 
     <div class="card-body">
@@ -17,7 +17,7 @@
                         {{ $errors->first('title') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.role.fields.title_helper') }}</span>
+                <small class="text-muted">{{ trans('cruds.role.fields.title_helper') }}</small>
             </div>
             <div class="form-group">
                 <label class="required" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label>
@@ -35,7 +35,7 @@
                         {{ $errors->first('permissions') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
+                <small class="text-muted">{{ trans('cruds.role.fields.permissions_helper') }}</small>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

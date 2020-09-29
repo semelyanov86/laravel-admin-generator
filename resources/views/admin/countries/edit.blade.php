@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.country.title_singular') }}
+        <strong>{{ trans('global.edit') }} {{ trans('cruds.country.title_singular') }}</strong>
     </div>
 
     <div class="card-body">
@@ -18,7 +18,7 @@
                         {{ $errors->first('name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.country.fields.name_helper') }}</span>
+                <small class="text-muted">{{ trans('cruds.country.fields.name_helper') }}</small>
             </div>
             <div class="form-group">
                 <label class="required" for="short_code">{{ trans('cruds.country.fields.short_code') }}</label>
@@ -28,7 +28,7 @@
                         {{ $errors->first('short_code') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.country.fields.short_code_helper') }}</span>
+                <small class="text-muted">{{ trans('cruds.country.fields.short_code_helper') }}</small>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

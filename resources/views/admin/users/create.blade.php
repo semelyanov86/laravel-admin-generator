@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.user.title_singular') }}
+        <strong>{{ trans('global.create') }} {{ trans('cruds.user.title_singular') }}</strong>
     </div>
 
     <div class="card-body">
@@ -17,7 +17,7 @@
                         {{ $errors->first('name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
+                <small class="text-muted">{{ trans('cruds.user.fields.name_helper') }}</small>
             </div>
             <div class="form-group">
                 <label class="required" for="email">{{ trans('cruds.user.fields.email') }}</label>
@@ -27,7 +27,7 @@
                         {{ $errors->first('email') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.email_helper') }}</span>
+                <small class="text-muted">{{ trans('cruds.user.fields.email_helper') }}</small>
             </div>
             <div class="form-group">
                 <label class="required" for="password">{{ trans('cruds.user.fields.password') }}</label>
@@ -37,7 +37,7 @@
                         {{ $errors->first('password') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
+                <small class="text-muted">{{ trans('cruds.user.fields.password_helper') }}</small>
             </div>
             <div class="form-group">
                 <div class="form-check {{ $errors->has('approved') ? 'is-invalid' : '' }}">
@@ -50,7 +50,7 @@
                         {{ $errors->first('approved') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.approved_helper') }}</span>
+                <small class="text-muted">{{ trans('cruds.user.fields.approved_helper') }}</small>
             </div>
             <div class="form-group">
                 <label class="required" for="roles">{{ trans('cruds.user.fields.roles') }}</label>
@@ -68,7 +68,7 @@
                         {{ $errors->first('roles') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.roles_helper') }}</span>
+                <small class="text-muted">{{ trans('cruds.user.fields.roles_helper') }}</small>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

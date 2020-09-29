@@ -52,6 +52,26 @@
                     </div>
                 </li>
             @endif
+                <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <div class="c-avatar"><img class="c-avatar-img" src="{{ asset('assets/img/profile.jpg') }}" alt="User Profile"></div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right pt-0">
+                        <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
+
+                        @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
+                            @can('profile_password_edit')
+                                <a class="dropdown-item" href="{{ route('profile.password.edit') }}">
+                                    <svg class="c-icon mfe-2">
+                                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
+                                    </svg> {{ trans('global.change_password') }}</a>
+                            @endcan
+                        @endif
+                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                            <svg class="c-icon mfe-2">
+                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
+                            </svg> {{ trans('global.logout') }}</a>
+                    </div>
+                </li>
 
 
         </ul>

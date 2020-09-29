@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.permission.title_singular') }}
+        <strong>{{ trans('global.edit') }} {{ trans('cruds.permission.title_singular') }}</strong>
     </div>
 
     <div class="card-body">
@@ -18,7 +18,7 @@
                         {{ $errors->first('title') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.permission.fields.title_helper') }}</span>
+                <small class="text-muted">{{ trans('cruds.permission.fields.title_helper') }}</>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
