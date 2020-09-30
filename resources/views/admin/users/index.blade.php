@@ -148,7 +148,12 @@
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 10,
-    responsive: true,
+    responsive: {
+        details: {
+            type: 'column',
+            target: 'td:not(.select-checkbox)'
+        }
+    },
     initComplete: function(settings, json) {
         $('div.dataTables_length').addClass( 'd-none d-sm-block' );
     }

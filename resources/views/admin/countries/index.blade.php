@@ -86,7 +86,12 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                responsive: true,
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'td:not(.select-checkbox)'
+                    }
+                },
                 ajax: "{{ route('admin.countries.index') }}",
                 columns: [
                     { data: 'placeholder', name: 'placeholder' },
