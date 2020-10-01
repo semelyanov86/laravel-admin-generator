@@ -130,3 +130,10 @@ table.dataTable thead .sorting_desc {
 #sidebar .select2-selection__arrow {
     display: none!important;
 }
+td.dtr-control {
+    background: url('/assets/img/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.parent td.dtr-control {
+    background: url('/assets/img/details_close.png') no-repeat center center;
+}

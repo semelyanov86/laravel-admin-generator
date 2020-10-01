@@ -23,6 +23,7 @@ class CountriesController extends Controller
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('collapse', '');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
@@ -50,7 +51,7 @@ class CountriesController extends Controller
                 return $row->short_code ? $row->short_code : "";
             });
 
-            $table->rawColumns(['actions', 'placeholder']);
+            $table->rawColumns(['actions', 'placeholder', 'collapse']);
 
             return $table->make(true);
         }

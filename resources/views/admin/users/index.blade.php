@@ -18,6 +18,7 @@
                         <th width="10">
 
                         </th>
+                        <th></th>
                         <th>
                             {{ trans('cruds.user.fields.id') }}
                         </th>
@@ -50,6 +51,7 @@
                             <td>
 
                             </td>
+                            <td></td>
                             <td>
                                 {{ $user->id ?? '' }}
                             </td>
@@ -146,12 +148,12 @@
 
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 2, 'desc' ]],
     pageLength: 10,
     responsive: {
         details: {
             type: 'column',
-            target: 'td:not(.select-checkbox)'
+            target: 'td.dtr-control'
         }
     },
     initComplete: function(settings, json) {

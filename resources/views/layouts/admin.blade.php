@@ -158,6 +158,10 @@
                 orderable: false,
                 searchable: false,
                 targets: -1
+            }, {
+                className: 'dtr-control',
+                orderable: false,
+                targets:   1
             }],
             select: {
                 style:    'multi+shift',

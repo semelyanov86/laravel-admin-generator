@@ -17,6 +17,7 @@
                     <th width="10">
 
                     </th>
+                    <th></th>
                     <th>
                         {{ trans('cruds.country.fields.id') }}
                     </th>
@@ -89,19 +90,20 @@
                 responsive: {
                     details: {
                         type: 'column',
-                        target: 'td:not(.select-checkbox)'
+                        target: 'td.dtr-control'
                     }
                 },
                 ajax: "{{ route('admin.countries.index') }}",
                 columns: [
                     { data: 'placeholder', name: 'placeholder' },
+                    { data: 'collapse', name: 'collapse' },
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
                     { data: 'short_code', name: 'short_code' },
                     { data: 'actions', name: '{{ trans('global.actions') }}' }
                 ],
                 orderCellsTop: true,
-                order: [[ 1, 'desc' ]],
+                order: [[ 2, 'desc' ]],
                 pageLength: 10,
                 initComplete: function(settings, json) {
                     $('div.dataTables_length').addClass( 'd-none d-sm-block' );
