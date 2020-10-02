@@ -18,7 +18,6 @@
                         <th width="10">
 
                         </th>
-                        <th></th>
                         <th>
                             {{ trans('cruds.user.fields.id') }}
                         </th>
@@ -40,9 +39,10 @@
                         <th>
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
-                        <th>
+                        <th width="20">
                             &nbsp;
                         </th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +51,6 @@
                             <td>
 
                             </td>
-                            <td></td>
                             <td>
                                 {{ $user->id ?? '' }}
                             </td>
@@ -99,7 +98,7 @@
                                 @endcan
 
                             </td>
-
+                            <td></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -148,7 +147,7 @@
 
   $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
-    order: [[ 2, 'desc' ]],
+    order: [[ 1, 'desc' ]],
     pageLength: 10,
     responsive: {
         details: {

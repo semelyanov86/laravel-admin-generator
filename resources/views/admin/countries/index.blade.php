@@ -17,7 +17,6 @@
                     <th width="10">
 
                     </th>
-                    <th></th>
                     <th>
                         {{ trans('cruds.country.fields.id') }}
                     </th>
@@ -27,9 +26,10 @@
                     <th>
                         {{ trans('cruds.country.fields.short_code') }}
                     </th>
-                    <th>
+                    <th width="10">
                         &nbsp;
                     </th>
+                    <th></th>
                 </tr>
                 </thead>
             </table>
@@ -96,14 +96,14 @@
                 ajax: "{{ route('admin.countries.index') }}",
                 columns: [
                     { data: 'placeholder', name: 'placeholder' },
-                    { data: 'collapse', name: 'collapse' },
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
                     { data: 'short_code', name: 'short_code' },
-                    { data: 'actions', name: '{{ trans('global.actions') }}' }
+                    { data: 'actions', name: '{{ trans('global.actions') }}' },
+                    { data: 'collapse', name: 'collapse' }
                 ],
                 orderCellsTop: true,
-                order: [[ 2, 'desc' ]],
+                order: [[ 1, 'desc' ]],
                 pageLength: 10,
                 initComplete: function(settings, json) {
                     $('div.dataTables_length').addClass( 'd-none d-sm-block' );
