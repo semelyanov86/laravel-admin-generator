@@ -59,9 +59,35 @@ class UcoScaffoldGeneratorCommand extends BaseCommand
 
             $this->performPostActionsWithMigration();
             $this->fillDatabase();
+            $this->addTranslations();
         } else {
             $this->commandData->commandInfo('There are not enough input fields for scaffold generation.');
         }
+    }
+
+    private function addTranslations()
+    {
+        foreach (config('panel.available_languages') as $lang=>$name) {
+            $path = resource_path('lang/' . $lang . '/cruds.php');
+            $data = file_get_contents($path);
+        }
+    }
+
+    private function generateFieldsTranslation()
+    {
+        $model = $this->commandData->dynamicVars['$MODEL_NAME_CAMEL$'];
+        $result = array(
+            $model => [
+                'title'          => $this->commandData->dynamicVars['$MODEL_NAME_CAMEL$'],
+                'title_singular' => $this->commandData->dynamicVars['$MODEL_NAME_CAMEL$'],
+                'fields'         => [
+                ]
+            ]
+        );
+        foreach ($this->commandData->fields as $field) {
+            $result[$model]['fields'][$field->name] = $field->name;
+        }
+        return $result;
     }
 
     private function fillDatabase()

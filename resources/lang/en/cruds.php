@@ -91,6 +91,7 @@ return [
             'deleted_at_helper' => '',
         ],
     ],
+    // ADD_NEW_CRUD_TRANSLATIONS
     'save' => 'Save',
     'cancel' => 'Cancel',
     'detail' => 'Detail',

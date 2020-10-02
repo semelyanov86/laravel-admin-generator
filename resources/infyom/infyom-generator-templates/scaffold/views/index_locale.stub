@@ -1,30 +1,96 @@
 @extends('layouts.admin')
 
 @section('content')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">@lang('models/$MODEL_NAME_PLURAL_CAMEL$.plural')</li>
-    </ol>
-    <div class="container-fluid">
-        <div class="animated fadeIn">
-             @include('flash::message')
-             <div class="row">
-                 <div class="col-lg-12">
-                     <div class="card">
-                         <div class="card-header">
-                             <i class="fa fa-align-justify"></i>
-                             @lang('models/$MODEL_NAME_PLURAL_CAMEL$.plural')
-                             <a class="pull-right" href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.create') }}"><i class="fa fa-plus-square fa-lg"></i></a>
-                         </div>
-                         <div class="card-body">
-                             @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.table')
-                              <div class="pull-right mr-3">
-                                     $PAGINATE$
-                              </div>
-                         </div>
-                     </div>
-                  </div>
-             </div>
-         </div>
+<div class="card">
+    <div class="card-header">
+        <strong class="line-title">{{ trans('cruds.$MODEL_NAME_SNAKE$.title_singular') }} {{ trans('global.list') }}</strong>
+        @can('$MODEL_NAME_SNAKE$_create')
+            <a class="btn btn-sm btn-success pull-right" href="{{ route('admin.$MODEL_NAME_PLURAL_SNAKE$.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.$MODEL_NAME_SNAKE$.title_singular') }}
+            </a>
+        @endcan
     </div>
+
+    <div class="card-body">
+    @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.table')
+
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+@parent
+<script>
+    $(function () {
+  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+@can('$MODEL_NAME_CAMEL$_delete')
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButton = {
+    text: deleteButtonTrans,
+    url: "{{ route('admin.$MODEL_NAME_PLURAL_CAMEL$.massDestroy') }}",
+    className: 'btn-danger',
+    action: function (e, dt, node, config) {
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
+      });
+
+      if (ids.length === 0) {
+        alert('{{ trans('global.datatables.zero_selected') }}')
+
+        return
+      }
+
+      if (confirm('{{ trans('global.areYouSure') }}')) {
+        $.ajax({
+          headers: {'x-csrf-token': _token},
+          method: 'POST',
+          url: config.url,
+          data: { ids: ids, _method: 'DELETE' }})
+          .done(function () { location.reload() })
+      }
+    }
+  }
+  dtButtons.push(deleteButton)
+@endcan
+
+  $.extend(true, $.fn.dataTable.defaults, {
+    orderCellsTop: true,
+    order: [[ 1, 'desc' ]],
+    pageLength: 10,
+    responsive: {
+        details: {
+            type: 'column',
+            target: 'td.dtr-control'
+        }
+    },
+    initComplete: function(settings, json) {
+        $('div.dataTables_length').addClass( 'd-none d-sm-block' );
+    }
+  });
+  let table = $('.datatable-$MODEL_NAME$:not(.ajaxTable)').DataTable({
+      buttons: {
+          buttons: dtButtons,
+          dom: {
+              container: {
+                  className: 'dt-buttons d-none d-sm-block'
+              }
+          }
+      },
+  })
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
+  });
+  $('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+      table
+        .column($(this).parent().index())
+        .search(value, strict)
+        .draw()
+  });
+})
+
+</script>
 @endsection
 

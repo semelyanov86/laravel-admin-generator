@@ -1,26 +1,49 @@
-<div class="table-responsive-sm">
-    <table class="table table-striped" id="$MODEL_NAME_PLURAL_CAMEL$-table">
-        <thead>
-            <tr>
-                $FIELD_HEADERS$
-                <th colspan="3">@lang('cruds.action')</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach($$MODEL_NAME_PLURAL_CAMEL$ as $$MODEL_NAME_CAMEL$)
-            <tr>
-                $FIELD_BODY$
-                <td>
-                    {!! Form::open(['route' => ['$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.destroy', $$MODEL_NAME_CAMEL$->$PRIMARY_KEY_NAME$], 'method' => 'delete']) !!}
-                    <div class='btn-group'>
-                        <a href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.show', [$$MODEL_NAME_CAMEL$->$PRIMARY_KEY_NAME$]) }}" class='btn btn-ghost-success'><i class="fa fa-eye"></i></a>
-                        <a href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.edit', [$$MODEL_NAME_CAMEL$->$PRIMARY_KEY_NAME$]) }}" class='btn btn-ghost-info'><i class="fa fa-edit"></i></a>
-                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-ghost-danger', 'onclick' => 'return confirm("'.__('cruds.are_you_sure').'")']) !!}
-                    </div>
-                    {!! Form::close() !!}
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-</div>
+<div class="table-responsive">
+            <table class="display responsive nowrap table table-bordered table-striped table-hover datatable datatable-$MODEL_NAME$">
+                <thead>
+                    <tr>
+                        <th width="10">
+
+                        </th>
+                        $FIELD_HEADERS$
+                        <th width="20">
+                            &nbsp;
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($$MODEL_NAME_PLURAL_CAMEL$ as $key => $$MODEL_NAME_CAMEL$)
+                        <tr data-entry-id="{{ $$MODEL_NAME_CAMEL$->id }}">
+                            <td>
+
+                            </td>
+                            $FIELD_BODY$
+                            <td>
+                                @can('$MODEL_NAME_SNAKE$_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.show', $$MODEL_NAME_CAMEL$->id) }}">
+                                        <i class="fa fa-eye" data-toggle="tooltip" data-placement="bottom" title="{{ trans('global.view') }}"></i>
+                                    </a>
+                                @endcan
+
+                                @can('$MODEL_NAME_SNAKE$_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.edit', $$MODEL_NAME_CAMEL$->id) }}">
+                                        <i class="fa fa-pencil" data-toggle="tooltip" data-placement="bottom" title="{{ trans('global.edit') }}"></i>
+                                    </a>
+                                @endcan
+
+                                @can('$MODEL_NAME_SNAKE$_delete')
+                                    <form action="{{ route('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.destroy', $$MODEL_NAME_CAMEL$->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="btn btn-xs btn-danger"><i class="fa fa-trash" data-toggle="tooltip" data-placement="bottom" title="{{ trans('global.delete') }}"></i></button>
+                                    </form>
+                                @endcan
+
+                            </td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>

@@ -2,6 +2,8 @@ $FIELDS$
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    {!! Form::submit(__('cruds.save'), ['class' => 'btn btn-primary']) !!}
+    <button class="btn btn-danger" type="submit">
+        {{ trans('global.save') }}
+    </button>
     <a href="{{ route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index') }}" class="btn btn-default">@lang('cruds.cancel')</a>
 </div>
