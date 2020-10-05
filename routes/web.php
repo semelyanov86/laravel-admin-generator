@@ -31,11 +31,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('countries/destroy', 'CountriesController@massDestroy')->name('countries.massDestroy');
     Route::resource('countries', 'CountriesController');
 
-    // Sample
-    Route::delete('samples/destroy', 'SampleController@massDestroy')->name('samples.massDestroy');
-    Route::resource('samples', 'SampleController');
 // UCO_PLACEHOLDER_VALUE
-
 
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
 });

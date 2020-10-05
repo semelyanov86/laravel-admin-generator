@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Lib\Scaffold\UcoControllerGenerator;
 use App\Lib\Scaffold\UcoMenuGenerator;
+use App\Lib\Scaffold\UcoModelGenerator;
 use App\Lib\Scaffold\UcoRoutesGenerator;
+use App\Lib\Scaffold\UcoViewGenerator;
 use App\Permission;
 use App\Role;
 use Illuminate\Console\Command;
@@ -11,11 +14,11 @@ use Illuminate\Support\Str;
 use InfyOm\Generator\Commands\BaseCommand;
 use InfyOm\Generator\Commands\Scaffold\ScaffoldGeneratorCommand;
 use InfyOm\Generator\Common\CommandData;
-use InfyOm\Generator\Generators\Scaffold\ControllerGenerator;
-use InfyOm\Generator\Generators\Scaffold\MenuGenerator;
+use InfyOm\Generator\Generators\FactoryGenerator;
+use InfyOm\Generator\Generators\MigrationGenerator;
+use InfyOm\Generator\Generators\RepositoryGenerator;
 use InfyOm\Generator\Generators\Scaffold\RequestGenerator;
-use InfyOm\Generator\Generators\Scaffold\RoutesGenerator;
-use InfyOm\Generator\Generators\Scaffold\ViewGenerator;
+use InfyOm\Generator\Generators\SeederGenerator;
 use Symfony\Component\Console\Input\InputOption;
 
 class UcoScaffoldGeneratorCommand extends BaseCommand
@@ -58,11 +61,42 @@ class UcoScaffoldGeneratorCommand extends BaseCommand
 
             $this->generateScaffoldItems();
 
+            $this->addTranslations();
             $this->performPostActionsWithMigration();
             $this->fillDatabase();
-            $this->addTranslations();
         } else {
             $this->commandData->commandInfo('There are not enough input fields for scaffold generation.');
+        }
+    }
+
+    public function generateCommonItems()
+    {
+        if (!$this->commandData->getOption('fromTable') and !$this->isSkip('migration')) {
+            $migrationGenerator = new MigrationGenerator($this->commandData);
+            $migrationGenerator->generate();
+        }
+
+        if (!$this->isSkip('model')) {
+            $modelGenerator = new UcoModelGenerator($this->commandData);
+            $modelGenerator->generate();
+        }
+
+        if (!$this->isSkip('repository') && $this->commandData->getOption('repositoryPattern')) {
+            $repositoryGenerator = new RepositoryGenerator($this->commandData);
+            $repositoryGenerator->generate();
+        }
+
+        if ($this->commandData->getOption('factory') || (
+                !$this->isSkip('tests') and $this->commandData->getAddOn('tests')
+            )) {
+            $factoryGenerator = new FactoryGenerator($this->commandData);
+            $factoryGenerator->generate();
+        }
+
+        if ($this->commandData->getOption('seeder')) {
+            $seederGenerator = new SeederGenerator($this->commandData);
+            $seederGenerator->generate();
+            $seederGenerator->updateMainSeeder();
         }
     }
 
@@ -172,12 +206,12 @@ class UcoScaffoldGeneratorCommand extends BaseCommand
         }
 
         if (!$this->isSkip('controllers') and !$this->isSkip('scaffold_controller')) {
-            $controllerGenerator = new ControllerGenerator($this->commandData);
+            $controllerGenerator = new UcoControllerGenerator($this->commandData);
             $controllerGenerator->generate();
         }
 
         if (!$this->isSkip('views')) {
-            $viewGenerator = new ViewGenerator($this->commandData);
+            $viewGenerator = new UcoViewGenerator($this->commandData);
             $viewGenerator->generate();
         }
 

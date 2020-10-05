@@ -22,3 +22,79 @@
     @endforeach
     </tbody>
 </table>
+
+@section('scripts')
+@parent
+<script>
+    $(function () {
+  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+@can('$MODEL_NAME_CAMEL$_delete')
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButton = {
+    text: deleteButtonTrans,
+    url: "{{ route('admin.$MODEL_NAME_PLURAL_CAMEL$.massDestroy') }}",
+    className: 'btn-danger',
+    action: function (e, dt, node, config) {
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
+      });
+
+      if (ids.length === 0) {
+        alert('{{ trans('global.datatables.zero_selected') }}')
+
+        return
+      }
+
+      if (confirm('{{ trans('global.areYouSure') }}')) {
+        $.ajax({
+          headers: {'x-csrf-token': _token},
+          method: 'POST',
+          url: config.url,
+          data: { ids: ids, _method: 'DELETE' }})
+          .done(function () { location.reload() })
+      }
+    }
+  }
+  dtButtons.push(deleteButton)
+@endcan
+
+  $.extend(true, $.fn.dataTable.defaults, {
+    orderCellsTop: true,
+    order: [[ 1, 'desc' ]],
+    pageLength: 10,
+    responsive: {
+        details: {
+            type: 'column',
+            target: 'td.dtr-control'
+        }
+    },
+    initComplete: function(settings, json) {
+        $('div.dataTables_length').addClass( 'd-none d-sm-block' );
+    }
+  });
+  let table = $('.datatable-$MODEL_NAME$:not(.ajaxTable)').DataTable({
+      buttons: {
+          buttons: dtButtons,
+          dom: {
+              container: {
+                  className: 'dt-buttons d-none d-sm-block'
+              }
+          }
+      },
+  })
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
+  });
+  $('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+      table
+        .column($(this).parent().index())
+        .search(value, strict)
+        .draw()
+  });
+})
+
+</script>
+@endsection

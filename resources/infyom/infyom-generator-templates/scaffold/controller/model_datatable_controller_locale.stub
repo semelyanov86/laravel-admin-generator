@@ -2,14 +2,16 @@
 
 namespace $NAMESPACE_CONTROLLER$;
 
-use $NAMESPACE_DATATABLES$\$MODEL_NAME$DataTable;
 use $NAMESPACE_REQUEST$;
 use $NAMESPACE_REQUEST$\Create$MODEL_NAME$Request;
 use $NAMESPACE_REQUEST$\Update$MODEL_NAME$Request;
+use $NAMESPACE_REQUEST$\MassDestroy$MODEL_NAME$Request;
 use $NAMESPACE_MODEL$\$MODEL_NAME$;
 use Flash;
 use $NAMESPACE_APP$\Http\Controllers\AppBaseController;
 use Response;
+use Yajra\DataTables\Facades\DataTables;
+use Gate;
 
 class $MODEL_NAME$Controller extends AppBaseController
 {
@@ -19,9 +21,38 @@ class $MODEL_NAME$Controller extends AppBaseController
      * @param $MODEL_NAME$DataTable $$MODEL_NAME_CAMEL$DataTable
      * @return Response
      */
-    public function index($MODEL_NAME$DataTable $$MODEL_NAME_CAMEL$DataTable)
+    public function index(Request $request)
     {
-        return $$MODEL_NAME_CAMEL$DataTable->render('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.index');
+        abort_if(Gate::denies('$MODEL_NAME_CAMEL$_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if ($request->ajax()) {
+            $query = $MODEL_NAME$::select(sprintf('%s.*', (new $MODEL_NAME$)->table));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate      = '$MODEL_NAME_CAMEL$_show';
+                $editGate      = '$MODEL_NAME_CAMEL$_edit';
+                $deleteGate    = '$MODEL_NAME_CAMEL$_delete';
+                $crudRoutePart = '$MODEL_NAME_PLURAL_SNAKE$';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+            $DATATABLE_COLUMNS$
+            $table->rawColumns($RAW_DATATABLE_COLUMNS$);
+            return $table->make(true);
+        }
+
+        return view('admin.$MODEL_NAME_PLURAL_SNAKE$.index');
+
+
     }
 
     /**
@@ -31,6 +62,7 @@ class $MODEL_NAME$Controller extends AppBaseController
      */
     public function create()
     {
+        abort_if(Gate::denies('$MODEL_NAME_CAMEL$_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.create');
     }
 
@@ -60,16 +92,9 @@ class $MODEL_NAME$Controller extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show($MODEL_NAME$ $$MODEL_NAME_CAMEL$)
     {
-        /** @var $MODEL_NAME$ $$MODEL_NAME_CAMEL$ */
-        $$MODEL_NAME_CAMEL$ = $MODEL_NAME$::find($id);
-
-        if (empty($$MODEL_NAME_CAMEL$)) {
-            Flash::error(__('models/$MODEL_NAME_PLURAL_CAMEL$.singular').' '.__('messages.not_found'));
-
-            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
-        }
+        abort_if(Gate::denies('$MODEL_NAME_CAMEL$_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.show')->with('$MODEL_NAME_CAMEL$', $$MODEL_NAME_CAMEL$);
     }
@@ -81,16 +106,9 @@ class $MODEL_NAME$Controller extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id)
+    public function edit($MODEL_NAME$ $$MODEL_NAME_CAMEL$)
     {
-        /** @var $MODEL_NAME$ $$MODEL_NAME_CAMEL$ */
-        $$MODEL_NAME_CAMEL$ = $MODEL_NAME$::find($id);
-
-        if (empty($$MODEL_NAME_CAMEL$)) {
-            Flash::error(__('messages.not_found', ['model' => __('models/$MODEL_NAME_PLURAL_CAMEL$.singular')]));
-
-            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
-        }
+        abort_if(Gate::denies('$MODEL_NAME_CAMEL$_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.edit')->with('$MODEL_NAME_CAMEL$', $$MODEL_NAME_CAMEL$);
     }
@@ -103,19 +121,9 @@ class $MODEL_NAME$Controller extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, Update$MODEL_NAME$Request $request)
+    public function update($MODEL_NAME$ $$MODEL_NAME_CAMEL$, Update$MODEL_NAME$Request $request)
     {
-        /** @var $MODEL_NAME$ $$MODEL_NAME_CAMEL$ */
-        $$MODEL_NAME_CAMEL$ = $MODEL_NAME$::find($id);
-
-        if (empty($$MODEL_NAME_CAMEL$)) {
-            Flash::error(__('messages.not_found', ['model' => __('models/$MODEL_NAME_PLURAL_CAMEL$.singular')]));
-
-            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
-        }
-
-        $$MODEL_NAME_CAMEL$->fill($request->all());
-        $$MODEL_NAME_CAMEL$->save();
+        $$MODEL_NAME_CAMEL$->update($request->all());
 
         Flash::success(__('messages.updated', ['model' => __('models/$MODEL_NAME_PLURAL_CAMEL$.singular')]));
 
@@ -131,21 +139,21 @@ class $MODEL_NAME$Controller extends AppBaseController
      *
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($MODEL_NAME$ $$MODEL_NAME_CAMEL$)
     {
-        /** @var $MODEL_NAME$ $$MODEL_NAME_CAMEL$ */
-        $$MODEL_NAME_CAMEL$ = $MODEL_NAME$::find($id);
-
-        if (empty($$MODEL_NAME_CAMEL$)) {
-            Flash::error(__('messages.not_found', ['model' => __('models/$MODEL_NAME_PLURAL_CAMEL$.singular')]));
-
-            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
-        }
+        abort_if(Gate::denies('$MODEL_NAME_CAMEL$_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $$MODEL_NAME_CAMEL$->delete();
 
         Flash::success(__('messages.deleted', ['model' => __('models/$MODEL_NAME_PLURAL_CAMEL$.singular')]));
 
         return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+    }
+
+    public function massDestroy(MassDestroy$MODEL_NAME$Request $request)
+    {
+        $MODEL_NAME$::whereIn('id', request('ids'))->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

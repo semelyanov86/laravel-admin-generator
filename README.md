@@ -114,3 +114,14 @@ Then check dates property in your model. With sample_date field it should be fol
         'updated_at',
         'deleted_at',
     ];
+
+##### Add constants for select fields
+If you have a select field, please add constant with array for key->value pairs. For example for status field add this constant to Model:
+
+    const STATUS_SELECT = [
+        'active' => 'Active',
+        'closed' => 'Closed',
+    ];
+
+##### Rename relation field name in controller
+In controller in index method if you have a relation field, rename its name from for example country_id to country. By this step we will transfer to view relation, not only id.

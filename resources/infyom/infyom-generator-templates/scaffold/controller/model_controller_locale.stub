@@ -158,4 +158,11 @@ class $MODEL_NAME$Controller extends AppBaseController
 
         return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
     }
+
+    public function massDestroy(MassDestroy$MODEL_NAME$Request $request)
+    {
+        $MODEL_NAME$::whereIn('id', request('ids'))->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
+    }
 }
