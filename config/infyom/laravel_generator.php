@@ -13,7 +13,7 @@ return [
 
         'migration'         => database_path('migrations/'),
 
-        'model'             => app_path('Models/'),
+        'model'             => app_path('/'),
 
         'datatables'        => app_path('DataTables/'),
 
@@ -128,7 +128,9 @@ return [
 
         'tables_searchable_default' => false,
 
-        'repository_pattern' => true,
+        'repository_pattern' => false,
+
+        'paginate' => false,
 
         'excluded_fields' => ['id'], // Array of columns that doesn't required while creating module
     ],

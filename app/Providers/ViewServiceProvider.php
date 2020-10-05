@@ -25,6 +25,10 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        View::composer(['admin.samples.fields'], function ($view) {
+            $countryItems = Country::pluck('name','id')->toArray();
+            $view->with('countryItems', $countryItems);
+        });
         //
     }
 }

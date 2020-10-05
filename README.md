@@ -91,3 +91,26 @@ These records are seeded with Seeder files
 in the generated panel, in top-left corner, you will see a search field, which, after you type in at least 3 characters, will look for all records in all CRUDs/Fields.
 
 If you want to customize the behavior of Global Search, it's all in the generated file app/Http/Controllers/Admin/GlobalSearchController.php, here's the main method.
+
+#### What should you do after adding new scaffold
+##### Add date getter and setter functions
+In newly created model add date functions. You need it if your model has date fields. For example, you have a date field with name sample_date:
+
+    public function getSampleDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setSampleDateAttribute($value)
+    {
+        $this->attributes['sample_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+Then check dates property in your model. With sample_date field it should be following:
+
+    protected $dates = [
+        'sample_date',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];

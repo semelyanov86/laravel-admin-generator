@@ -54,7 +54,6 @@ class UcoScaffoldGeneratorCommand extends BaseCommand
         parent::handle();
 
         if ($this->checkIsThereAnyDataToGenerate()) {
-            $this->addTranslations();
             $this->generateCommonItems();
 
             $this->generateScaffoldItems();
@@ -91,7 +90,7 @@ class UcoScaffoldGeneratorCommand extends BaseCommand
         'title_singular' => '" . $this->commandData->dynamicVars['$MODEL_NAME$'] . "',
         'fields'         => [\n";
         foreach ($this->commandData->fields as $field) {
-            $res .= "            '" . $field->name . "'                => '" . $field->name ."',\n";
+            $res .= "            '" . $field->name . "'                => '" . Str::title(str_replace('_', ' ', $field->name)) ."',\n";
             $res .= "            '" . $field->name . "_helper'                => '',\n";
         }
         $res .= "        ],\n

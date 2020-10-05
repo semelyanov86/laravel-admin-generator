@@ -91,7 +91,33 @@ return [
             'deleted_at_helper' => '',
         ],
     ],
-    // ADD_NEW_CRUD_TRANSLATIONS
+    'sample'        => [
+        'title'          => 'Samples',
+        'title_singular' => 'Sample',
+        'fields'         => [
+            'id'                => 'id',
+            'id_helper'                => '',
+            'name'                => 'name',
+            'name_helper'                => '',
+            'country_id'                => 'country_id',
+            'country_id_helper'                => '',
+            'status'                => 'status',
+            'status_helper'                => '',
+            'amount'                => 'amount',
+            'amount_helper'                => '',
+            'is_active'                => 'is_active',
+            'is_active_helper'                => '',
+            'sample_date'                => 'sample_date',
+            'sample_date_helper'                => '',
+            'created_at'                => 'created_at',
+            'created_at_helper'                => '',
+            'updated_at'                => 'updated_at',
+            'updated_at_helper'                => '',
+        ],
+
+    ],
+    // ADD_NEW_CRUD_TRANSLATIONS 
+
     'save' => 'Save',
     'cancel' => 'Cancel',
     'detail' => 'Detail',

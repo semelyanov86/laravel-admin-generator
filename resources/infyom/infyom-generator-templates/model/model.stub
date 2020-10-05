@@ -3,6 +3,7 @@
 namespace $NAMESPACE_MODEL$;
 
 use $NAMESPACE_MODEL_EXTEND$ as Model;
+use \DateTimeInterface;
 $SOFT_DELETE_IMPORT$
 $DOCS$
 class $MODEL_NAME$ extends Model
@@ -36,4 +37,9 @@ $PRIMARY$
     ];
 
     $RELATIONS$
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 }
