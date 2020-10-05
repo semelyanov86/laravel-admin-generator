@@ -7,6 +7,7 @@ use App\Lib\Scaffold\UcoRoutesGenerator;
 use App\Permission;
 use App\Role;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use InfyOm\Generator\Commands\BaseCommand;
 use InfyOm\Generator\Commands\Scaffold\ScaffoldGeneratorCommand;
 use InfyOm\Generator\Common\CommandData;
@@ -53,6 +54,7 @@ class UcoScaffoldGeneratorCommand extends BaseCommand
         parent::handle();
 
         if ($this->checkIsThereAnyDataToGenerate()) {
+            $this->addTranslations();
             $this->generateCommonItems();
 
             $this->generateScaffoldItems();
@@ -70,24 +72,32 @@ class UcoScaffoldGeneratorCommand extends BaseCommand
         foreach (config('panel.available_languages') as $lang=>$name) {
             $path = resource_path('lang/' . $lang . '/cruds.php');
             $data = file_get_contents($path);
+            $newData = Str::replaceLast('// ADD_NEW_CRUD_TRANSLATIONS', $this->getTranslationCrudsValues(), $data);
+            if (Str::contains($data, $newData)) {
+                $this->commandData->commandObj->info('Translation is already exists, Skipping Adjustment.');
+
+                return;
+            }
+
+            file_put_contents($path, $newData);
+            $this->commandData->commandComment('Translations added.');
         }
     }
 
-    private function generateFieldsTranslation()
+    private function getTranslationCrudsValues()
     {
-        $model = $this->commandData->dynamicVars['$MODEL_NAME_CAMEL$'];
-        $result = array(
-            $model => [
-                'title'          => $this->commandData->dynamicVars['$MODEL_NAME_CAMEL$'],
-                'title_singular' => $this->commandData->dynamicVars['$MODEL_NAME_CAMEL$'],
-                'fields'         => [
-                ]
-            ]
-        );
+        $res = "'" . $this->commandData->dynamicVars['$MODEL_NAME_CAMEL$'] . "'        => [
+        'title'          => '" . $this->commandData->dynamicVars['$MODEL_NAME_PLURAL$'] . "',
+        'title_singular' => '" . $this->commandData->dynamicVars['$MODEL_NAME$'] . "',
+        'fields'         => [\n";
         foreach ($this->commandData->fields as $field) {
-            $result[$model]['fields'][$field->name] = $field->name;
+            $res .= "            '" . $field->name . "'                => '" . $field->name ."',\n";
+            $res .= "            '" . $field->name . "_helper'                => '',\n";
         }
-        return $result;
+        $res .= "        ],\n
+    ],
+    // ADD_NEW_CRUD_TRANSLATIONS \n";
+        return $res;
     }
 
     private function fillDatabase()
