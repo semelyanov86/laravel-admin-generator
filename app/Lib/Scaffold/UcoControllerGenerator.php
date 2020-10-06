@@ -111,17 +111,12 @@ class UcoControllerGenerator extends \InfyOm\Generator\Generators\Scaffold\Contr
             if ($field->htmlType == 'selectTable') {
                 $fieldData = explode(':', $field->htmlInput);
                 $fieldName = trim($field->name, '_id');
+                $displayValueArr = explode(',', $fieldData[2]);
+                $headerFieldTemplateParsed = str_replace('$FIELD_NAME$', $fieldName, $headerFieldTemplate);
                 $headerFieldTemplateParsed = str_replace(
                     '$DATATABLE_FIELD_CONTENT$',
-                    '$labels = [];
-
-                foreach ($row->' . $fieldData[1] . ' as $' . $fieldName . ') {
-                    $labels[] = sprintf(\'<span class="label label-info label-many">%s</span>\', $' . $fieldName . '->name);
-                }
-
-                return implode(\' \', $labels);',
-                    $headerFieldTemplate);
-                $headerFieldTemplateParsed = str_replace($field->name, $fieldName, $headerFieldTemplateParsed);
+                    'return $row->' . $fieldName . ' ? $row->' . $fieldName . '->' . $displayValueArr[0] . ' : \'\';',
+                    $headerFieldTemplateParsed);
                 $this->rawColumns[] = "'" . $fieldName . "'";
             } elseif ($field->htmlType == 'select') {
                 $headerFieldTemplateParsed = str_replace('$DATATABLE_FIELD_CONTENT$', 'return $row->' . $field->name . ' ? $MODEL_NAME$::' . Str::upper($field->name) . '_SELECT[$row->' . $field->name . '] : "";', $headerFieldTemplate);

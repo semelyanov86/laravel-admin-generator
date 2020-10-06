@@ -124,8 +124,14 @@ class UcoScaffoldGeneratorCommand extends BaseCommand
         'title_singular' => '" . $this->commandData->dynamicVars['$MODEL_NAME$'] . "',
         'fields'         => [\n";
         foreach ($this->commandData->fields as $field) {
-            $res .= "            '" . $field->name . "'                => '" . Str::title(str_replace('_', ' ', $field->name)) ."',\n";
-            $res .= "            '" . $field->name . "_helper'                => '',\n";
+            if ($field->htmlType == 'selectTable') {
+                $fieldName = trim($field->name, '_id');
+                $res .= "            '" . $fieldName . "'                => '" . Str::title(str_replace('_', ' ', $fieldName)) ."',\n";
+                $res .= "            '" . $fieldName . "_helper'                => '',\n";
+            } else {
+                $res .= "            '" . $field->name . "'                => '" . Str::title(str_replace('_', ' ', $field->name)) ."',\n";
+                $res .= "            '" . $field->name . "_helper'                => '',\n";
+            }
         }
         $res .= "        ],\n
     ],

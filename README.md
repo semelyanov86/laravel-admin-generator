@@ -123,6 +123,14 @@ If you have a select field, please add constant with array for key->value pairs.
         'closed' => 'Closed',
     ];
 
+##### Check relation field name in controller
+
+In generated controller check relation field name.
+For example, rename 
+`$table->editColumn('country_id'`
+to this 
+`$table->editColumn('country_name'`
+
 ##### Add Mass Destroy Request
 
 If you need a mass destroy functionality you need to add MassDestroyRequest:

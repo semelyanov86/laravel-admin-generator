@@ -105,9 +105,10 @@ class UcoViewGenerator extends \InfyOm\Generator\Generators\Scaffold\ViewGenerat
                 continue;
             }
             if ($field->htmlType == 'selectTable') {
-                $parseArr = explode('_', $field->name);
-                $parseInput = explode(':', $field->htmlInput);
-                $columnFields[] = array('data' => $parseArr[0], 'name' => $parseInput[1] . '.' . explode(',', $parseInput[2])[0]);
+                $fieldData = explode(':', $field->htmlInput);
+                $fieldName = trim($field->name, '_id');
+                $displayValueArr = explode(',', $fieldData[2]);
+                $columnFields[] = array('data' => $fieldName . '_' . $displayValueArr[0], 'name' => $fieldName . '.' . $displayValueArr[0]);
             } else {
                 $columnFields[] = array('data' => $field->name, 'name' => $field->name);
             }
@@ -418,15 +419,13 @@ class UcoViewGenerator extends \InfyOm\Generator\Generators\Scaffold\ViewGenerat
             $fieldData = explode(':', $field->htmlInput);
             $fieldName = trim($field->name, '_id');
             $displayValueArr = explode(',', $fieldData[2]);
-            return '@foreach($$MODEL_NAME_CAMEL$->' . $fieldData[1] . ' as $key => $' . $fieldName . ')
-                                <span class="label label-info">{{ $' . $fieldName . '->' . $displayValueArr[0] . ' }}</span>
-                            @endforeach';
+            return '{{ $$MODEL_NAME_CAMEL$->' . $fieldName . '->' . $displayValueArr[0] . ' ?? \'\' }}';
         } elseif ($field->htmlType == 'select') {
             return '{{ $NAMESPACE_APP$\$MODEL_NAME$::' . Str::upper($field->name) . '_SELECT[$$MODEL_NAME_CAMEL$->' . $field->name . '] ?? \'\' }}';
         } elseif ($field->htmlType == 'checkbox') {
             return '<input type="checkbox" disabled="disabled" {{ $$MODEL_NAME_CAMEL$->' . $field->name . ' ? \'checked\' : \'\' }}>';
         } else {
-            return '{{ $$MODEL_NAME_CAMEL$->$FIELD_NAME$ }}';
+            return '{{ $$MODEL_NAME_CAMEL$->' . $field->name . ' }}';
         }
     }
 
