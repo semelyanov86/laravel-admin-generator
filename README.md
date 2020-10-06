@@ -123,5 +123,31 @@ If you have a select field, please add constant with array for key->value pairs.
         'closed' => 'Closed',
     ];
 
-##### Rename relation field name in controller
-In controller in index method if you have a relation field, rename its name from for example country_id to country. By this step we will transfer to view relation, not only id.
+##### Add Mass Destroy Request
+
+If you need a mass destroy functionality you need to add MassDestroyRequest:
+
+```
+namespace App\Http\Requests;
+use App\Sample;
+use Gate;
+use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Component\HttpFoundation\Response;
+
+class MassDestroySampleRequest extends FormRequest
+{
+    public function authorize()
+    {
+        abort_if(Gate::denies('sample_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return true;
+    }
+
+    public function rules()
+    {
+        return [
+            'ids'   => 'required|array',
+            'ids.*' => 'exists:samples,id',
+        ];
+    }
+}
+

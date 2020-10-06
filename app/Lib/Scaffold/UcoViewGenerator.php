@@ -99,7 +99,7 @@ class UcoViewGenerator extends \InfyOm\Generator\Generators\Scaffold\ViewGenerat
     private function generateDataTableBody()
     {
         $templateData = get_template('scaffold.views.datatable_body', $this->templateType);
-        $columnFields = array();
+        $columnFields = array(['data' => 'placeholder', 'name' => 'placeholder']);
         foreach ($this->commandData->fields as $field) {
             if (!$field->inIndex) {
                 continue;
@@ -112,6 +112,8 @@ class UcoViewGenerator extends \InfyOm\Generator\Generators\Scaffold\ViewGenerat
                 $columnFields[] = array('data' => $field->name, 'name' => $field->name);
             }
         }
+        $columnFields[] = array('data' => 'actions', 'name' => trans('global.actions'));
+        $columnFields[] = array('data' => 'collapse', 'name' => 'collapse');
         $templateData = str_replace('$COLUMNS_DATA$', json_encode($columnFields), $templateData);
         $templateData = str_replace('$FIELD_HEADERS$', $this->generateTableHeaderFields(), $templateData);
         return fill_template($this->commandData->dynamicVars, $templateData);
@@ -400,6 +402,7 @@ class UcoViewGenerator extends \InfyOm\Generator\Generators\Scaffold\ViewGenerat
                 $fieldTemplate
             );
             $singleFieldStr = str_replace('$FIELD_NAME$', $field->name, $singleFieldStr);
+            $singleFieldStr = str_replace('$SHOW_FIELD_VALUE$', $this->generateShowFieldValue($field), $singleFieldStr);
             $singleFieldStr = fill_template($this->commandData->dynamicVars, $singleFieldStr);
 
             $fieldsStr .= $singleFieldStr."\n\n";
@@ -407,6 +410,24 @@ class UcoViewGenerator extends \InfyOm\Generator\Generators\Scaffold\ViewGenerat
 
         FileUtil::createFile($this->path, 'show_fields.blade.php', $fieldsStr);
         $this->commandData->commandInfo('show_fields.blade.php created');
+    }
+
+    protected function generateShowFieldValue($field)
+    {
+        if($field->htmlType == 'selectTable') {
+            $fieldData = explode(':', $field->htmlInput);
+            $fieldName = trim($field->name, '_id');
+            $displayValueArr = explode(',', $fieldData[2]);
+            return '@foreach($$MODEL_NAME_CAMEL$->' . $fieldData[1] . ' as $key => $' . $fieldName . ')
+                                <span class="label label-info">{{ $' . $fieldName . '->' . $displayValueArr[0] . ' }}</span>
+                            @endforeach';
+        } elseif ($field->htmlType == 'select') {
+            return '{{ $NAMESPACE_APP$\$MODEL_NAME$::' . Str::upper($field->name) . '_SELECT[$$MODEL_NAME_CAMEL$->' . $field->name . '] ?? \'\' }}';
+        } elseif ($field->htmlType == 'checkbox') {
+            return '<input type="checkbox" disabled="disabled" {{ $$MODEL_NAME_CAMEL$->' . $field->name . ' ? \'checked\' : \'\' }}>';
+        } else {
+            return '{{ $$MODEL_NAME_CAMEL$->$FIELD_NAME$ }}';
+        }
     }
 
     private function generateShow()

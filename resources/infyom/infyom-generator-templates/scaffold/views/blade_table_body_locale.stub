@@ -5,6 +5,9 @@
                         <th width="10">
 
                         </th>
+                                                    <th>
+                                                        {{ trans('cruds.$MODEL_NAME_CAMEL$.fields.id') }}
+                                                    </th>
                         $FIELD_HEADERS$
                         <th width="20">
                             &nbsp;

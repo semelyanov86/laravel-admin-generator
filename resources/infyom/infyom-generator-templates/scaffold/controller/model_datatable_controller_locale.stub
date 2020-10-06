@@ -7,9 +7,10 @@ use $NAMESPACE_REQUEST$\Create$MODEL_NAME$Request;
 use $NAMESPACE_REQUEST$\Update$MODEL_NAME$Request;
 use $NAMESPACE_REQUEST$\MassDestroy$MODEL_NAME$Request;
 use $NAMESPACE_MODEL$\$MODEL_NAME$;
+use Illuminate\Http\Request;
 use Flash;
 use $NAMESPACE_APP$\Http\Controllers\AppBaseController;
-use Response;
+use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Gate;
 
@@ -18,8 +19,9 @@ class $MODEL_NAME$Controller extends AppBaseController
     /**
      * Display a listing of the $MODEL_NAME$.
      *
-     * @param $MODEL_NAME$DataTable $$MODEL_NAME_CAMEL$DataTable
+     * @param  Request  $request
      * @return Response
+     * @throws \Exception
      */
     public function index(Request $request)
     {
@@ -29,8 +31,8 @@ class $MODEL_NAME$Controller extends AppBaseController
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('collapse', '');
             $table->addColumn('actions', '&nbsp;');
-
             $table->editColumn('actions', function ($row) {
                 $viewGate      = '$MODEL_NAME_CAMEL$_show';
                 $editGate      = '$MODEL_NAME_CAMEL$_edit';
@@ -46,7 +48,7 @@ class $MODEL_NAME$Controller extends AppBaseController
                 ));
             });
             $DATATABLE_COLUMNS$
-            $table->rawColumns($RAW_DATATABLE_COLUMNS$);
+            $table->rawColumns([$RAW_DATATABLE_COLUMNS$]);
             return $table->make(true);
         }
 

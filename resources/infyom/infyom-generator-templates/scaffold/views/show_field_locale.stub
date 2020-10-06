@@ -4,6 +4,6 @@
                             {{ trans('cruds.$MODEL_NAME_CAMEL$.fields.$FIELD_NAME$') }}
                         </th>
                         <td>
-                            {{ $$MODEL_NAME_CAMEL$->$FIELD_NAME$ }}
+                            $SHOW_FIELD_VALUE$
                         </td>
                     </tr>
