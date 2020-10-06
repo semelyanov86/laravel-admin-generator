@@ -112,7 +112,7 @@ class UcoControllerGenerator extends \InfyOm\Generator\Generators\Scaffold\Contr
                 $fieldData = explode(':', $field->htmlInput);
                 $fieldName = trim($field->name, '_id');
                 $displayValueArr = explode(',', $fieldData[2]);
-                $headerFieldTemplateParsed = str_replace('$FIELD_NAME$', $fieldName, $headerFieldTemplate);
+                $headerFieldTemplateParsed = str_replace('$FIELD_NAME$', $fieldName . '_' . $displayValueArr[0], $headerFieldTemplate);
                 $headerFieldTemplateParsed = str_replace(
                     '$DATATABLE_FIELD_CONTENT$',
                     'return $row->' . $fieldName . ' ? $row->' . $fieldName . '->' . $displayValueArr[0] . ' : \'\';',
