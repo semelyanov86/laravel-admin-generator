@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}" @if ( app()->getLocale() === 'he' ) dir="rtl" @else dir="ltr" @endif>
 
 <head>
     <meta charset="UTF-8">
@@ -39,7 +39,7 @@
             <i class="fas fa-fw fa-bars"></i>
         </button>
 
-        <ul class="c-header-nav ml-auto">
+        <ul class="c-header-nav @if ( app()->getLocale() === 'he' ) mr-auto @else ml-auto @endif">
             @if(count(config('panel.available_languages', [])) > 1)
                 <li class="c-header-nav-item dropdown d-md-down-none">
                     <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -56,7 +56,7 @@
                         <div class="c-avatar"><img class="c-avatar-img" src="{{ asset('assets/img/profile.jpg') }}" alt="User Profile"></div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right pt-0">
-                        <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
+                        <div class="dropdown-header bg-light py-2"><strong>{{ trans('global.account') }}</strong></div>
 
                         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                             @can('profile_password_edit')

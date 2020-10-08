@@ -4,7 +4,7 @@
     <div class="card-header">
         <strong class="line-title">{{ trans('cruds.permission.title_singular') }} {{ trans('global.list') }}</strong>
         @can('permission_create')
-            <a class="btn btn-sm btn-success pull-right" href="{{ route('admin.permissions.create') }}">
+            <a class="btn btn-sm btn-success @if ( app()->getLocale() === 'he' ) pull-left @else pull-right @endif" href="{{ route('admin.permissions.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.permission.title_singular') }}
             </a>
         @endcan

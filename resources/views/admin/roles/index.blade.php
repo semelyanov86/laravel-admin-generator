@@ -4,7 +4,7 @@
     <div class="card-header">
         <strong class="line-title">{{ trans('cruds.role.title_singular') }} {{ trans('global.list') }}</strong>
         @can('role_create')
-            <a class="btn btn-sm btn-success pull-right" href="{{ route('admin.roles.create') }}">
+            <a class="btn btn-sm btn-success @if ( app()->getLocale() === 'he' ) pull-left @else pull-right @endif" href="{{ route('admin.roles.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.role.title_singular') }}
             </a>
         @endcan

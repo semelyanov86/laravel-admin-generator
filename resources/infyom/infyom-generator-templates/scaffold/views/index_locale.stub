@@ -5,7 +5,7 @@
     <div class="card-header">
         <strong class="line-title">{{ trans('cruds.$MODEL_NAME_SNAKE$.title_singular') }} {{ trans('global.list') }}</strong>
         @can('$MODEL_NAME_SNAKE$_create')
-            <a class="btn btn-sm btn-success pull-right" href="{{ route('admin.$MODEL_NAME_PLURAL_SNAKE$.create') }}">
+            <a class="btn btn-sm btn-success @if ( app()->getLocale() === 'he' ) pull-left @else pull-right @endif" href="{{ route('admin.$MODEL_NAME_PLURAL_SNAKE$.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.$MODEL_NAME_SNAKE$.title_singular') }}
             </a>
         @endcan

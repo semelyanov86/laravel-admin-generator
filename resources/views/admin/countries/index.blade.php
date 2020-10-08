@@ -4,7 +4,7 @@
         <div class="card-header">
             <strong  class="line-title">{{ trans('cruds.country.title_singular') }} {{ trans('global.list') }}</strong>
             @can('country_create')
-                <a class="btn btn-sm btn-success pull-right" href="{{ route('admin.countries.create') }}">
+                <a class="btn btn-sm btn-success  @if ( app()->getLocale() === 'he' ) pull-left @else pull-right @endif" href="{{ route('admin.countries.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.country.title_singular') }}
                 </a>
             @endcan
