@@ -79,8 +79,13 @@
 @parent
 <script>
     $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('permission_delete')
+  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons).map(function(btn) {
+      if (btn.action && btn.extend !== 'selectAll') {
+          delete(btn.action)
+      }
+      return btn;
+  })
+        @can('permission_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,

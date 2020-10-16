@@ -169,7 +169,8 @@
             },
             order: [],
             scrollX: true,
-            pageLength: 100,
+            pageLength: 10,
+            "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
             dom: 'lBfrtip<"actions">',
             "language": {
                 "paginate": {
@@ -213,7 +214,8 @@
                     text: csvButtonTrans,
                     exportOptions: {
                         columns: ':visible'
-                    }
+                    },
+                    action: newexportaction
                 },
                 {
                     extend: 'excel',
@@ -221,7 +223,8 @@
                     text: excelButtonTrans,
                     exportOptions: {
                         columns: ':visible'
-                    }
+                    },
+                    action: newexportaction
                 },
                 {
                     extend: 'pdf',
@@ -229,7 +232,8 @@
                     text: pdfButtonTrans,
                     exportOptions: {
                         columns: ':visible'
-                    }
+                    },
+                    action: newexportaction
                 },
                 {
                     extend: 'print',
@@ -237,7 +241,8 @@
                     text: printButtonTrans,
                     exportOptions: {
                         columns: ':visible'
-                    }
+                    },
+                    action: newexportaction
                 },
                 {
                     extend: 'colvis',
