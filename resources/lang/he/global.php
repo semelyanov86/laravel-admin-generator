@@ -22,6 +22,8 @@ return [
     'login_email'                          => 'Email',
     'login_password'                       => 'Password',
     'login_password_confirmation'          => 'Password confirmation',
+    'login_existing'                        => 'Login to existing account',
+    'login_not_have_account'            => 'If you still do not have account on this portal, please sign up, using link below',
     'logout'                               => 'Logout',
     'month'                                => 'Month',
     'no'                                   => 'No',

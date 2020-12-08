@@ -39,10 +39,10 @@
                         <th>
                             {{ trans('cruds.user.fields.roles') }}
                         </th>
-                        <th width="20">
+                        <th width="120">
                             &nbsp;
                         </th>
-                        <th></th>
+{{--                        <th></th>--}}
                     </tr>
                 </thead>
                 <tbody>
@@ -98,7 +98,7 @@
                                 @endcan
 
                             </td>
-                            <td></td>
+{{--                            <td></td>--}}
                         </tr>
                     @endforeach
                 </tbody>
