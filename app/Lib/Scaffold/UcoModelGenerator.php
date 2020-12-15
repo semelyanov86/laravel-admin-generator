@@ -78,7 +78,12 @@ class UcoModelGenerator extends \InfyOm\Generator\Generators\ModelGenerator
                 $fillableConst .= 'const ' . Str::upper($field->name) . "_SELECT = [\n";
                 foreach ($field->htmlValues as $htmlValue) {
                     $value = explode(':', $htmlValue);
-                    $fillableConst .= "       '" . $value[1] . "' => '" . $value[0] . "',\n";
+                    if (isset($value[1])) {
+                        $key = $value[1];
+                    } else {
+                        $key = $value[0];
+                    }
+                    $fillableConst .= "       '" . $key . "' => '" . $value[0] . "',\n";
                 }
                 $fillableConst .= "    ];\n";
             }
