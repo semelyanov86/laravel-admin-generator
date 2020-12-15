@@ -1,7 +1,7 @@
 <!-- $FIELD_NAME_TITLE$ Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('$FIELD_NAME$', '$FIELD_NAME_TITLE$:') !!}
-    {!! Form::text('$FIELD_NAME$', null, ['class' => 'form-control','id'=>'$FIELD_NAME$']) !!}
+    {!! Form::text('$FIELD_NAME$', $record ? $record->$FIELD_NAME$ : null, ['class' => 'form-control datetime','id'=>'$FIELD_NAME$']) !!}
 </div>
 
 @push('scripts')

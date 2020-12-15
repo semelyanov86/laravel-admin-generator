@@ -20,7 +20,7 @@
                             <div class="card-body">
                                 {!! Form::open(['route' => '$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.store'$FILES$]) !!}
 
-                                   @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.fields')
+                                   @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.fields', ['record' => false])
 
                                 {!! Form::close() !!}
                             </div>

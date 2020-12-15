@@ -10,7 +10,7 @@
         <form method="POST" action="{{ route("$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.update", [$$MODEL_NAME_CAMEL$->$PRIMARY_KEY_NAME$]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.fields')
+            @include('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.fields', ['record' => $$MODEL_NAME_CAMEL$])
         </form>
     </div>
 </div>
